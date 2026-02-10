@@ -1,1 +1,148 @@
+ubuntu@ubuntu:~$ sudo apt install nmap
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libblas3 liblinear4 libssh2-1t64 nmap-common
+Suggested packages:
+  liblinear-tools liblinear-dev ndiff zenmap
+The following NEW packages will be installed:
+  libblas3 liblinear4 libssh2-1t64 nmap nmap-common
+0 upgraded, 5 newly installed, 0 to remove and 0 not upgraded.
+Need to get 6,286 kB of archives.
+After this operation, 27.4 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libblas3 amd64 3.12.0-3build1 [238 kB]
+Get:2 http://archive.ubuntu.com/ubuntu noble/universe amd64 liblinear4 amd64 2.3.0+dfsg-5build1 [42.3 kB]
+Get:3 http://archive.ubuntu.com/ubuntu noble/main amd64 libssh2-1t64 amd64 1.11.0-4.1build2 [120 kB]
+Get:4 http://archive.ubuntu.com/ubuntu noble/universe amd64 nmap-common all 7.94+git20230807.3be01efb1+dfsg-3build2 [4,192 kB]
+Get:5 http://archive.ubuntu.com/ubuntu noble/universe amd64 nmap amd64 7.94+git20230807.3be01efb1+dfsg-3build2 [1,694 kB]
+Fetched 6,286 kB in 5s (1,147 kB/s)
+Selecting previously unselected package libblas3:amd64.
+Preparing to unpack .../libblas3_3.12.0-3build1_amd64.deb ...
+Unpacking libblas3:amd64 ...
+Selecting previously unselected package liblinear4:amd64.
+Preparing to unpack .../liblinear4_2.3.0+dfsg-5build1_amd64.deb ...
+Unpacking liblinear4:amd64 ...
+Selecting previously unselected package libssh2-1t64:amd64.
+Preparing to unpack .../libssh2-1t64_1.11.0-4.1build2_amd64.deb ...
+Unpacking libssh2-1t64:amd64 ...
+Selecting previously unselected package nmap-common.
+Preparing to unpack .../nmap-common_7.94+git20230807.3be01efb1+dfsg-3build2_all.deb ...
+Unpacking nmap-common ...
+Selecting previously unselected package nmap.
+Preparing to unpack .../nmap_7.94+git20230807.3be01efb1+dfsg-3build2_amd64.deb ...
+Unpacking nmap ...
+Setting up libblas3:amd64 ...
+Setting up nmap-common (7.94+git20230807.3be01efb1+dfsg-3build2) ...
 
+ubuntu@ubuntu:~$ nmap -v
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-02-05 16:30 UTC
+Read data files from: /usr/bin/../share/nmap
+WARNING: No targets were specified, so 0 hosts scanned.
+Nmap done: 0 IP addresses (0 hosts up) scanned in 0.06 seconds
+
+ubuntu@ubuntu:~$ nmap 192.168.1.7
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-02-05 16:35 UTC
+Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
+Nmap done: 1 IP address (0 hosts up) scanned in 3.07 seconds
+
+ubuntu@ubuntu:~$ nmap -Pn 192.168.1.7
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-02-05 16:36 UTC
+Nmap scan report for 192.168.1.7
+Host is up (0.024s latency).
+Not shown: 993 filtered tcp ports (no-response)
+
+PORT     STATE  SERVICE
+135/tcp  open   msrpc
+139/tcp  open   netbios-ssn
+445/tcp  open   microsoft-ds
+902/tcp  open   iss-realserver
+912/tcp  open   apex-mesh
+3306/tcp open   mysql
+5357/tcp open   wsapi
+
+ubuntu@ubuntu:~$ nmap -Pn 192.168.1.7-10
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-02-05 18:13 UTC
+
+Nmap scan report for 192.168.1.7
+Host is up (0.0038s latency).
+Not shown: 994 filtered tcp ports (no-response)
+
+PORT     STATE SERVICE
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+912/tcp  open  apex-mesh
+3306/tcp open  mysql
+5357/tcp open  wsapi
+
+
+Nmap scan report for 192.168.1.8
+Host is up (0.0076s latency).
+Not shown: 997 filtered tcp ports
+
+PORT     STATE SERVICE
+8008/tcp open  http
+8009/tcp open  ajp13
+8443/tcp open  https-alt
+
+
+Nmap scan report for 192.168.1.9
+Host is up (0.0069s latency).
+Not shown: 996 filtered tcp ports
+
+PORT     STATE SERVICE
+8008/tcp open  http
+8009/tcp open  ajp13
+8443/tcp open  https-alt
+9000/tcp open  cslistener
+
+
+Nmap scan report for 192.168.1.10
+Host is up.
+
+ubuntu@ubuntu:~$ nmap -Pn -sV 192.168.1.7
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-02-05 18:51 UTC
+Nmap scan report for 192.168.1.7
+Host is up (0.0049s latency).
+Not shown: 993 filtered tcp ports
+
+PORT     STATE SERVICE          VERSION
+135/tcp  open  msrpc            Microsoft Windows RPC
+139/tcp  open  netbios-ssn      Microsoft Windows netbios-ssn
+445/tcp  open  microsoft-ds?
+902/tcp  open  ssl/vmware-auth  VMware Authentication Daemon 1.10 (Uses VNC, SOAP)
+912/tcp  open  vmware-auth      VMware Authentication Daemon 1.0 (Uses VNC, SOAP)
+3306/tcp open  mysql            MySQL (blocked - too many connection errors)
+5357/tcp open  http             Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+ubuntu@ubuntu:~$ nmap -Pn -A 192.168.1.7
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-02-07 16:42 UTC
+Nmap scan report for 192.168.1.7
+Host is up (0.021s latency).
+Not shown: 994 filtered tcp ports
+
+PORT     STATE SERVICE          VERSION
+135/tcp  open  msrpc            Microsoft Windows RPC
+139/tcp  open  netbios-ssn      Microsoft Windows netbios-ssn
+445/tcp  open  microsoft-ds?
+902/tcp  open  ssl/vmware-auth  VMware Authentication Daemon 1.10 (Uses VNC, SOAP)
+3306/tcp open  mysql            MySQL (blocked - too many connection errors)
+5357/tcp open  http             Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+
+|_http-title: Service Unavailable
+|_http-server-header: Microsoft-HTTPAPI/2.0
+
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-time:
+|   date: 2026-02-07T16:43:11
+|_  start_date: N/A
+| smb2-security-mode:
+|   3:1:1:
+|_  Message signing enabled but not required
+
+Nmap done: 1 IP address (1 host up) scanned in 59.19 seconds
