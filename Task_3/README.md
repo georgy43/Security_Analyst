@@ -1,102 +1,78 @@
-The objective of this task was to configure a basic host-based firewall on a Linux system using UFW (Uncomplicated Firewall) in order to:
+Objective
 
-Protect the system from unauthorized network access
+The purpose of this task was to demonstrate how a poorly secured web application can be vulnerable to SQL Injection, using DVWA (Damn Vulnerable Web Application) in a controlled laboratory environment.
+The goals were to:
 
-Allow only required services (e.g., SSH)
+Understand how SQL Injection occurs
 
-Block unnecessary or insecure services (e.g., HTTP)
+Observe the impact of insecure input handling
 
-Verify that firewall rules are correctly applied
+Learn why input validation and prepared statements are essential
 
-Tool Used: UFW (Uncomplicated Firewall)
+Practice ethical security testing on a purpose-built vulnerable system
 
-UFW is a user-friendly interface for managing the iptables firewall on Linux.
-It allows administrators to:
+Tool Used: DVWA
 
-Enable or disable the firewall
+DVWA is a deliberately insecure web application designed for learning web security. It allows students to:
 
-Allow or deny traffic based on ports or services
+Experiment with common vulnerabilities
 
-View active security rules
+Test attacks in a safe, legal environment
 
-Strengthen system security with minimal complexity
+Understand how real applications should be protected
+
+The application provides different security levels (Low/Medium/High) to show how defenses reduce risk.
 
 Steps Performed
-1. Installation of UFW
+1. Installation and Configuration
 
-UFW was installed using:
+DVWA was installed on a local server/virtual machine using a web stack (Apache, PHP, MySQL).
 
-sudo apt install ufw
+The database was initialized through the DVWA setup page.
 
+The application was accessed through the browser at the local address.
 
-The initial status was checked with:
+2. Setting Security Level to Low
 
-sudo ufw status
+From the DVWA interface, the security level was changed to “Low.”
 
+At this level the application performs little or no input validation, simulating a poorly coded website.
 
-At this stage the firewall was inactive by default.
+3. Performing SQL Injection Test
 
-2. Enabling the Firewall
+The SQL Injection module of DVWA was opened.
 
-The firewall was activated using:
+User input fields that interact with the database were tested.
 
-sudo ufw enable
+By entering specially crafted input instead of normal values, the application returned unexpected database information, proving that user input was being directly included in SQL queries without sanitization.
 
+Vulnerability Explanation
+Why the Application Was Vulnerable
 
-This ensures that filtering rules are applied automatically on system startup.
+User input was concatenated directly into SQL statements
 
-3. Configuring Access Rules
+No filtering or escaping of special characters
 
-To meet the task requirements:
+No use of prepared statements or parameterized queries
 
-Allow SSH Access (port 22)
-sudo ufw allow ssh
+This allowed an attacker to:
 
+Modify the logic of SQL queries
 
-or
+Retrieve data that should be private
 
-sudo ufw allow 22
+Bypass authentication mechanisms
 
+Security Impact
 
-This rule permits remote administration while keeping other ports closed.
+If this were a real system, SQL Injection could lead to:
 
-Deny HTTP Traffic (port 80)
-sudo ufw deny 80
+Exposure of usernames and passwords
 
+Leakage of personal or financial data
 
-Blocking HTTP prevents unencrypted web access that could expose the system.
+Unauthorized login without credentials
 
-4. Verifying Firewall Status
+Full compromise of the database server
 
-The active rules were confirmed with:
-
-sudo ufw status
-
-
-Expected result:
-
-SSH → ALLOWED
-
-HTTP → DENIED
-
-All other ports → BLOCKED by default
-
-Significance of the Configuration
-
-A firewall acts as the first line of defense for a system.
-
-Allowing only SSH ensures:
-
-Secure remote login
-
-Encrypted communication
-
-Denying HTTP reduces:
-
-Exposure to web-based attacks
-
-Unauthorized service access
-
-Principle followed: least privilege security model
-
-This configuration demonstrates how a Linux machine can be hardened with only a few commands.
+This demonstrates that SQL Injection remains one of the most critical web vulnerabilities.
