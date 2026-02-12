@@ -1,102 +1,127 @@
-The objective of this task was to configure a basic host-based firewall on a Linux system using UFW (Uncomplicated Firewall) in order to:
+1. Executive Summary
 
-Protect the system from unauthorized network access
+This report presents the findings of a security assessment conducted on a local test network using Nmap and Wireshark. The objective was to identify open ports, running services, insecure protocols, and potential vulnerabilities within the network environment.
 
-Allow only required services (e.g., SSH)
+The assessment revealed multiple exposed services and instances of unencrypted communication, which could pose security risks if left unmitigated. Recommendations have been provided to strengthen network defenses and reduce the attack surface.
 
-Block unnecessary or insecure services (e.g., HTTP)
+2. Scope of Assessment
 
-Verify that firewall rules are correctly applied
+Target Network: Local test network (e.g., 192.168.1.0/24)
 
-Tool Used: UFW (Uncomplicated Firewall)
+Assessment Type: Internal security assessment
 
-UFW is a user-friendly interface for managing the iptables firewall on Linux.
-It allows administrators to:
+Tools Used:
 
-Enable or disable the firewall
+Nmap (Port scanning & service detection)
 
-Allow or deny traffic based on ports or services
+Wireshark (Packet capture & traffic analysis)
 
-View active security rules
+Testing Environment: Controlled lab / Virtual Machine
 
-Strengthen system security with minimal complexity
+This assessment was conducted strictly for educational purposes.
 
-Steps Performed
-1. Installation of UFW
+3. Methodology
+Phase 1: Network Discovery and Port Scanning (Nmap)
 
-UFW was installed using:
+The following activities were performed:
 
-sudo apt install ufw
+Host discovery to identify active devices.
+
+Port scanning to detect open TCP ports.
+
+Service version detection.
+
+Aggressive scan for OS and additional information.
+
+Purpose:
+
+Identify exposed services.
+
+Detect unnecessary open ports.
+
+Assess possible vulnerabilities.
+
+Phase 2: Network Traffic Analysis (Wireshark)
+
+The following steps were performed:
+
+Selected active network interface.
+
+Captured live traffic.
+
+Applied filters (HTTP, TCP, DNS).
+
+Inspected packet contents and protocol details.
+
+Purpose:
+
+Identify plaintext data transmission.
+
+Detect suspicious or abnormal traffic.
+
+Analyze communication patterns.
+
+4. Findings
+4.1 Open Ports and Services (Nmap Results)
+
+Example findings:
+
+Port	Service	Observation	Risk Level
+22	SSH	Remote access enabled	Medium
+80	HTTP	Unencrypted web service	Medium
+445	SMB	File sharing service exposed	High
+3306	MySQL	Database port accessible	High
+Analysis:
+
+SMB (445) exposure increases risk of ransomware and lateral movement.
+
+HTTP (80) allows unencrypted data transmission.
+
+Database ports (3306) should not be publicly accessible.
+
+Open ports increase the system’s attack surface.
+
+4.2 Traffic Analysis Findings (Wireshark Results)
+
+Observations during packet capture:
+
+HTTP traffic transmitted in plaintext.
+
+DNS queries visible without encryption.
+
+TCP handshake processes observed.
+
+No encrypted protection for certain services.
+
+Security Concerns:
+
+Credentials transmitted over HTTP can be intercepted.
+
+Unsecured traffic may allow packet sniffing attacks.
+
+Sensitive information can be exposed in shared networks.
+
+5. Risk Assessment
+Vulnerability	Impact	Likelihood	Risk Rating
+Open SMB Port	Data compromise	High	High
+Unencrypted HTTP	Credential theft	Medium	Medium
+Exposed Database	Unauthorized access	High	High
+Weak Firewall Rules	Increased attack surface	Medium	Medium–High
 
 
-The initial status was checked with:
+7. Conclusion
 
-sudo ufw status
+The assessment successfully identified several potential security risks within the test network. The combination of Nmap scanning and Wireshark traffic analysis provided valuable insight into:
 
+Exposed services
 
-At this stage the firewall was inactive by default.
+Network communication patterns
 
-2. Enabling the Firewall
+Security misconfigurations
 
-The firewall was activated using:
-
-sudo ufw enable
-
-
-This ensures that filtering rules are applied automatically on system startup.
-
-3. Configuring Access Rules
-
-To meet the task requirements:
-
-Allow SSH Access (port 22)
-sudo ufw allow ssh
+Regular security assessments are essential to reduce vulnerabilities, prevent unauthorized access, and maintain a secure network infrastructure.
 
 
-or
+Wireshark Version: (Insert your version)
 
-sudo ufw allow 22
-
-
-This rule permits remote administration while keeping other ports closed.
-
-Deny HTTP Traffic (port 80)
-sudo ufw deny 80
-
-
-Blocking HTTP prevents unencrypted web access that could expose the system.
-
-4. Verifying Firewall Status
-
-The active rules were confirmed with:
-
-sudo ufw status
-
-
-Expected result:
-
-SSH → ALLOWED
-
-HTTP → DENIED
-
-All other ports → BLOCKED by default
-
-Significance of the Configuration
-
-A firewall acts as the first line of defense for a system.
-
-Allowing only SSH ensures:
-
-Secure remote login
-
-Encrypted communication
-
-Denying HTTP reduces:
-
-Exposure to web-based attacks
-
-Unauthorized service access
-
-Principle followed: least privilege security model
-
-This configuration demonstrates how a Linux machine can be hardened with only a few commands.
+Operating System: Ubuntu/Linux
