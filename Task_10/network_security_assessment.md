@@ -122,6 +122,6 @@ Security misconfigurations
 Regular security assessments are essential to reduce vulnerabilities, prevent unauthorized access, and maintain a secure network infrastructure.
 
 
-Wireshark Version: (Insert your version)
+Wireshark 
 
 Operating System: Ubuntu/Linux
