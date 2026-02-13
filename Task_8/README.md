@@ -1,102 +1,27 @@
-The objective of this task was to configure a basic host-based firewall on a Linux system using UFW (Uncomplicated Firewall) in order to:
+Objective
 
-Protect the system from unauthorized network access
+The objective of this task was to capture and analyze network traffic using Wireshark, a widely used packet analysis tool. The purpose was to:
 
-Allow only required services (e.g., SSH)
+Monitor live network communication
 
-Block unnecessary or insecure services (e.g., HTTP)
+Inspect packet-level data
 
-Verify that firewall rules are correctly applied
+Identify HTTP traffic
 
-Tool Used: UFW (Uncomplicated Firewall)
+Understand how unencrypted protocols transmit information
 
-UFW is a user-friendly interface for managing the iptables firewall on Linux.
-It allows administrators to:
+This task helps in understanding how data travels across a network and how attackers may intercept unsecured traffic.
 
-Enable or disable the firewall
+Tool Used: Wireshark
 
-Allow or deny traffic based on ports or services
+Wireshark is a network protocol analyzer that allows users to:
 
-View active security rules
+Capture live packet data
 
-Strengthen system security with minimal complexity
+Inspect individual frames and protocol details
 
-Steps Performed
-1. Installation of UFW
+Filter specific types of traffic
 
-UFW was installed using:
+Troubleshoot and analyze network behavior
 
-sudo apt install ufw
-
-
-The initial status was checked with:
-
-sudo ufw status
-
-
-At this stage the firewall was inactive by default.
-
-2. Enabling the Firewall
-
-The firewall was activated using:
-
-sudo ufw enable
-
-
-This ensures that filtering rules are applied automatically on system startup.
-
-3. Configuring Access Rules
-
-To meet the task requirements:
-
-Allow SSH Access (port 22)
-sudo ufw allow ssh
-
-
-or
-
-sudo ufw allow 22
-
-
-This rule permits remote administration while keeping other ports closed.
-
-Deny HTTP Traffic (port 80)
-sudo ufw deny 80
-
-
-Blocking HTTP prevents unencrypted web access that could expose the system.
-
-4. Verifying Firewall Status
-
-The active rules were confirmed with:
-
-sudo ufw status
-
-
-Expected result:
-
-SSH → ALLOWED
-
-HTTP → DENIED
-
-All other ports → BLOCKED by default
-
-Significance of the Configuration
-
-A firewall acts as the first line of defense for a system.
-
-Allowing only SSH ensures:
-
-Secure remote login
-
-Encrypted communication
-
-Denying HTTP reduces:
-
-Exposure to web-based attacks
-
-Unauthorized service access
-
-Principle followed: least privilege security model
-
-This configuration demonstrates how a Linux machine can be hardened with only a few commands.
+It is commonly used by network administrators, cybersecurity analysts, and penetration testers.
