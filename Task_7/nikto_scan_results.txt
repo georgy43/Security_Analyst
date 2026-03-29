@@ -1,0 +1,61 @@
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          127.0.0.1
++ Target Hostname:    localhost
++ Target Port:        80
++ Start Time:         2024-11-15 14:23:10 (GMT+5:30)
+---------------------------------------------------------------------------
++ Server: Apache/2.4.41 (Ubuntu)
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ Apache/2.4.41 appears to be outdated (current is at least Apache/2.4.54). Apache 2.2.34 is the EOL for the 2.x branch.
++ Web Server returns a valid response with junk HTTP methods, this may cause false positives.
++ OSVDB-877: HTTP TRACE method is active, suggesting the host is vulnerable to XST
++ OSVDB-3268: /DVWA/config/: Directory indexing found.
++ /DVWA/config/: Configuration information may be available remotely.
++ OSVDB-3268: /DVWA/docs/: Directory indexing found.
++ OSVDB-3233: /DVWA/icons/: Directory indexing found.
++ OSVDB-3233: /icons/README: Apache default file found.
++ /DVWA/login.php: Admin login page/section found.
++ Cookie PHPSESSID created without the httponly flag
++ Cookie security created without the httponly flag
++ /DVWA/phpinfo.php: Output from the phpinfo() function was found.
++ OSVDB-12184: /DVWA/?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000: PHP reveals potentially sensitive information via certain HTTP requests that contain specific QUERY strings.
++ OSVDB-12184: /DVWA/?=PHPE9568F36-D428-11d2-A769-00AA001ACF42: PHP reveals potentially sensitive information via certain HTTP requests that contain specific QUERY strings.
++ OSVDB-12184: /DVWA/?=PHPE9568F34-D428-11d2-A769-00AA001ACF42: PHP reveals potentially sensitive information via certain HTTP requests that contain specific QUERY strings.
++ Server leaks inodes via ETags, header found with file /DVWA/robots.txt
++ /DVWA/robots.txt: contains 1 entry which should be manually viewed.
++ 7915 requests: 0 error(s) and 21 item(s) reported on remote host
++ End Time:           2024-11-15 14:31:47 (GMT+5:30) (517 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested
+
+========== ANALYSIS SUMMARY ==========
+
+CRITICAL:
+  [!] Default credentials (admin:password) accepted — change immediately
+  [!] /DVWA/config/ directory is browseable — sensitive DB config exposed
+
+HIGH:
+  [!] TRACE method enabled — vulnerable to Cross-Site Tracing (XST)
+  [!] Apache version disclosed: Apache/2.4.41 (outdated)
+  [!] phpinfo.php is publicly accessible — exposes full PHP/server configuration
+
+MEDIUM:
+  [!] PHP session cookie missing HttpOnly flag — vulnerable to XSS cookie theft
+  [!] /DVWA/login.php found — no brute-force protection detected
+
+LOW:
+  [!] X-Frame-Options header missing — clickjacking risk
+  [!] X-XSS-Protection header not set
+  [!] X-Content-Type-Options header not set
+
+INFORMATIONAL:
+  [i] robots.txt found with 1 entry
+  [i] Directory listings enabled on /docs/ and /icons/
+
+========================================
+Scan completed. Review findings and apply patches.
+========================================
